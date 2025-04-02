@@ -8,23 +8,41 @@ interface Post {
   date: string;
 }
 
-const fetchPost = async (slug: string) => {
-  const response = await fetch("https://wp.yuvabeeducation.com/?graphql=true", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: GET_POST_BY_SLUG,
-      variables: { slug },
-    }),
-  });
+const fetchPost = async (slug: string): Promise<Post | null> => {
+  try {
+    const response = await fetch(
+      "https://wp.yuvabeeducation.com/?graphql=true",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: GET_POST_BY_SLUG,
+          variables: { slug },
+        }),
+      }
+    );
 
-  const result = await response.json();
-  return result?.data?.postBy || null;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result?.data?.postBy || null;
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    return null;
+  }
 };
 
-const PostPage = async ({ params }: { params: { slug: string } }) => {
+interface PageParams {
+  params: {
+    slug: string;
+  };
+}
+
+const PostPage = async ({ params }: PageParams) => {
   const post = await fetchPost(params.slug);
 
   if (!post) {
