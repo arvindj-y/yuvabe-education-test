@@ -1,7 +1,7 @@
 import React from "react";
 import { GET_POST_BY_SLUG } from "src/lib/graphqlRequest"; // Import the query
 
-// Define the Post interface
+// Define the Post interface with the expected properties
 interface Post {
   id: string;
   title: string;
@@ -15,11 +15,12 @@ interface Params {
   slug: string;
 }
 
-// Define the PostPageProps type
+// Define the PostPageProps type for page component props
 interface PostPageProps {
-  params: Params;
+  params: Params; // Params will contain the slug
 }
 
+// Data fetching function
 const fetchPost = async (slug: string): Promise<Post | null> => {
   const response = await fetch("https://wp.yuvabeeducation.com/?graphql=true", {
     method: "POST",
@@ -33,10 +34,10 @@ const fetchPost = async (slug: string): Promise<Post | null> => {
   });
 
   const result = await response.json();
-  return result?.data?.postBy || null;
+  return result?.data?.postBy || null; // Return post or null if not found
 };
 
-// Server Component
+// Server-side rendering logic
 const PostPage = async ({ params }: PostPageProps) => {
   const post = await fetchPost(params.slug); // Fetch data using the slug
 
