@@ -9,7 +9,11 @@ interface Post {
   readingTime: string;
 }
 
-const fetchPost = async (slug: string) => {
+interface PostPageProps {
+  post: Post | null; // Post object or null if not found
+}
+
+const fetchPost = async (slug: string): Promise<Post | null> => {
   const response = await fetch("https://wp.yuvabeeducation.com/?graphql=true", {
     method: "POST",
     headers: {
@@ -25,9 +29,22 @@ const fetchPost = async (slug: string) => {
   return result?.data?.postBy || null;
 };
 
-const PostPage = async ({ params }: { params: { slug: string } }) => {
+// `getServerSideProps` or `getStaticProps` will fetch data and pass it as props
+export async function getServerSideProps({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const post = await fetchPost(params.slug);
 
+  return {
+    props: {
+      post, // Pass the post as a prop to the page component
+    },
+  };
+}
+
+const PostPage = ({ post }: PostPageProps) => {
   if (!post) {
     return <div>Post not found</div>;
   }
