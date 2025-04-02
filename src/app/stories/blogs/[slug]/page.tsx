@@ -1,6 +1,7 @@
 import React from "react";
 import { GET_POST_BY_SLUG } from "src/lib/graphqlRequest"; // Import the query
 
+// Define the Post interface
 interface Post {
   id: string;
   title: string;
@@ -9,8 +10,14 @@ interface Post {
   readingTime: string;
 }
 
+// Define the Params type for dynamic route parameters
+interface Params {
+  slug: string;
+}
+
+// Define the PostPageProps type
 interface PostPageProps {
-  post: Post | null; // Post object or null if not found
+  params: Params;
 }
 
 const fetchPost = async (slug: string): Promise<Post | null> => {
@@ -29,22 +36,10 @@ const fetchPost = async (slug: string): Promise<Post | null> => {
   return result?.data?.postBy || null;
 };
 
-// `getServerSideProps` or `getStaticProps` will fetch data and pass it as props
-export async function getServerSideProps({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const post = await fetchPost(params.slug);
+// Server Component
+const PostPage = async ({ params }: PostPageProps) => {
+  const post = await fetchPost(params.slug); // Fetch data using the slug
 
-  return {
-    props: {
-      post, // Pass the post as a prop to the page component
-    },
-  };
-}
-
-const PostPage = ({ post }: PostPageProps) => {
   if (!post) {
     return <div>Post not found</div>;
   }
