@@ -1,16 +1,18 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import FaqItem from "./FaqItem";
+import FaqItem from "@/components/Faqitem";
 
 const faqs = [
   {
     question: "How does this internship differ from online courses?",
-    answer: "This internship provides hands-on experience, real projects, and mentorship.",
+    answer:
+      "This internship provides hands-on experience, real projects, and mentorship.",
   },
   {
     question: "What career opportunities can I expect post-internship?",
-    answer: "You can explore roles in AI, ML, Data Science, and Software Development.",
+    answer:
+      "You can explore roles in AI, ML, Data Science, and Software Development.",
   },
   {
     question: "Will I receive a certificate?",
@@ -18,19 +20,23 @@ const faqs = [
   },
   {
     question: "Can I apply if I have no prior AI/ML experience?",
-    answer: "Absolutely! This program is designed for beginners as well as experienced learners.",
+    answer:
+      "Absolutely! This program is designed for beginners as well as experienced learners.",
   },
   {
     question: "Who is eligible to apply for the AI & ML internship?",
-    answer: "Anyone with a passion for AI & ML can apply, irrespective of academic background.",
+    answer:
+      "Anyone with a passion for AI & ML can apply, irrespective of academic background.",
   },
   {
     question: "How does this internship differ from online courses?",
-    answer: "This internship provides hands-on experience, real projects, and mentorship.",
+    answer:
+      "This internship provides hands-on experience, real projects, and mentorship.",
   },
   {
     question: "What career opportunities can I expect post-internship?",
-    answer: "You can explore roles in AI, ML, Data Science, and Software Development.",
+    answer:
+      "You can explore roles in AI, ML, Data Science, and Software Development.",
   },
   {
     question: "Will I receive a certificate?",
@@ -38,11 +44,13 @@ const faqs = [
   },
   {
     question: "Can I apply if I have no prior AI/ML experience?",
-    answer: "Absolutely! This program is designed for beginners as well as experienced learners.",
+    answer:
+      "Absolutely! This program is designed for beginners as well as experienced learners.",
   },
   {
     question: "Who is eligible to apply for the AI & ML internship?",
-    answer: "Anyone with a passion for AI & ML can apply, irrespective of academic background.",
+    answer:
+      "Anyone with a passion for AI & ML can apply, irrespective of academic background.",
   },
 ];
 
@@ -77,7 +85,11 @@ export default function FaqSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: "easeInOut", delay: index * 0.1 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeInOut",
+                delay: index * 0.1,
+              }}
             >
               <FaqItem question={faq.question} answer={faq.answer} />
             </motion.div>
