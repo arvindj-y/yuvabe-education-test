@@ -17,7 +17,7 @@ interface Params {
 
 // Define the PostPageProps type for page component props
 interface PostPageProps {
-  params: Params; // Params will contain the slug
+  params: Promise<Params>; // Params will contain the slug
 }
 
 // Data fetching function
@@ -38,7 +38,8 @@ const fetchPost = async (slug: string): Promise<Post | null> => {
 };
 
 // Server-side rendering logic
-const PostPage = async ({ params }: PostPageProps) => {
+const PostPage = async (props: PostPageProps) => {
+  const params = await props.params;
   const post = await fetchPost(params.slug); // Fetch data using the slug
 
   if (!post) {
